@@ -11,8 +11,8 @@
 <template>
   <h1>ALIEN ESCAPE</h1>
   <main>
+    <Juego  id="juego"/>
   </main>
-  <Juego  id="juego"/>
 </template>
 
 <style>
