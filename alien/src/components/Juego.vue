@@ -14,26 +14,18 @@ export default {
     methods: {
         jump(e) {
 
-            // console.log(e.keyCode);
-            // console.log(document.getElementById('alien').classList.value);
-
             if (e.keyCode == '38') {
                 if (this.verticalPosition > 10) {
                     this.verticalPosition = this.verticalPosition - 10;
                     console.log(this.verticalPosition);
                     document.getElementById('alien').style.top = this.verticalPosition + "px";
                 }
-                // if (!document.getElementById('alien').classList.contains('jump'))
-                //     document.getElementById('alien').className = 'jump';
-                // document.getElementById('alien').style.transla = '5px';
             } else if (e.keyCode == '40') {
                 if (this.verticalPosition < 470) {
                     this.verticalPosition = this.verticalPosition + 10;
                     console.log(this.verticalPosition);
                     document.getElementById('alien').style.top = this.verticalPosition + "px";
                 }
-                // if (!document.getElementById('alien').classList.contains('down'))
-                //     document.getElementById('alien').className = 'down';
             }
 
             setTimeout(() => {
