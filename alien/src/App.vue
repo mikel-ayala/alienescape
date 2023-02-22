@@ -51,6 +51,9 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     animation: inicio 3s;
     z-index: 2;
+    background-image:url('assets/Desert.gif');
+    background-repeat:no-repeat;
+    background-size: cover;
   }
 
   @keyframes inicio {

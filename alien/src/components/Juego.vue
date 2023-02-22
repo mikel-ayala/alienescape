@@ -1,6 +1,6 @@
 <template>
     <div>
-        <img src="../assets/alien.gif" id="alien">  
+        <img src="../assets/ufo.gif" id="alien">  
     </div>
 </template>
 
@@ -51,6 +51,14 @@
         animation: jump 0.8s;
         animation-timing-function: cubic-bezier(.41,.54,.4,1.02); 
     }
+
+    #alien{
+        margin-top: 20%;
+        margin-left: 2cm;
+        height: 3cm;
+        width: 3cm;
+    }
+    
 
     @keyframes jump {
         0% {
