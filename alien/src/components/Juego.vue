@@ -41,20 +41,24 @@ export default {
             }, 800);
         },
         randomObjects() {
-            setTimeout(() => {
-                let randNum = Math.floor(Math.random() * 2);
-                if (randNum == 0) {
+                let obstaculo = document.createElement('div');
 
-                } else if (randNum == 1) {
+                let aleat = (Math.floor(Math.random() * 470)) - 100;
+                obstaculo.style.top = aleat + 'px';
 
-                } else {
+                console.log(aleat);
 
-                }
-            }, 1000);
-        }
+                
+                obstaculo.id = 'obstaculo';
+                document.getElementById('juego').appendChild(obstaculo);
+        },
     },
     mounted() {
         window.addEventListener('keydown', this.jump);
+        setTimeout(() => {
+            //setInterval(this.randomObjects, 3000);
+            this.randomObjects();
+        }, 3000);
     }
 }
 </script>
@@ -82,44 +86,23 @@ img {
     left: 2cm;
 }
 
+#obstaculo {
+    height: 2cm;
+    width: 2cm;
+    position: relative;
+    left: 33cm;
+    background-color: black;
 
-@keyframes jump {
-    0% {
-        padding-bottom: 0;
-    }
+    animation: moveObstaculo 2s linear;
+}
 
-    5% {
-        transform: scale(1.1, 0.95);
-    }
 
-    50% {
-        transform: translateY(-200px);
-    }
-
-    95% {}
+@keyframes moveObstaculo {
 
     100% {
-        padding-bottom: 0;
+        left: 0cm;
+        display: none;
     }
 }
 
-@keyframes down {
-    0% {
-        padding-bottom: 0;
-    }
-
-    5% {
-        transform: scale(1.1, 0.95);
-    }
-
-    50% {
-        transform: translateY(+200px);
-    }
-
-    95% {}
-
-    100% {
-        padding-bottom: 0;
-    }
-}
 </style>
