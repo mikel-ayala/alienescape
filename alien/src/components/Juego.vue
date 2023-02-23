@@ -8,7 +8,7 @@
 export default {
     data() {
         return {
-            verticalPosition: 230
+            verticalPosition: 230,
         }
     },
     methods: {
@@ -17,13 +17,13 @@ export default {
             if (e.keyCode == '38') {
                 if (this.verticalPosition > 10) {
                     this.verticalPosition = this.verticalPosition - 10;
-                    console.log(this.verticalPosition);
+                    //console.log(this.verticalPosition);
                     document.getElementById('alien').style.top = this.verticalPosition + "px";
                 }
             } else if (e.keyCode == '40') {
                 if (this.verticalPosition < 470) {
                     this.verticalPosition = this.verticalPosition + 10;
-                    console.log(this.verticalPosition);
+                    //console.log(this.verticalPosition);
                     document.getElementById('alien').style.top = this.verticalPosition + "px";
                 }
             }
@@ -38,14 +38,37 @@ export default {
                 let aleat = (Math.floor(Math.random() * 470)) - 100;
                 obstaculo.style.top = aleat + 'px';
 
-                console.log(aleat);
+                //console.log(aleat);
 
-                
                 obstaculo.id = 'obstaculo';
                 document.getElementById('juego').appendChild(obstaculo);
+                
+                let hit = setInterval(() => {
+                    console.log('Y Obs:' + obstaculo.getBoundingClientRect().y + ' Bottom Obs: ' + obstaculo.getBoundingClientRect().bottom);
+                    console.log('Y Alien:' + document.getElementById('alien').getBoundingClientRect().y + ' Alien Obs: ' + document.getElementById('alien').getBoundingClientRect().bottom);
+                    if(document.getElementById('alien').getBoundingClientRect().y >= obstaculo.getBoundingClientRect().y
+                        && document.getElementById('alien').getBoundingClientRect().y <= obstaculo.getBoundingClientRect().bottom
+                        && document.getElementById('alien').getBoundingClientRect().x >= obstaculo.getBoundingClientRect().x
+                        && document.getElementById('alien').getBoundingClientRect().x <= obstaculo.getBoundingClientRect().right
+                            || document.getElementById('alien').getBoundingClientRect().y >= obstaculo.getBoundingClientRect().y
+                            && document.getElementById('alien').getBoundingClientRect().y <= obstaculo.getBoundingClientRect().bottom
+                            && document.getElementById('alien').getBoundingClientRect().right >= obstaculo.getBoundingClientRect().x
+                            && document.getElementById('alien').getBoundingClientRect().right <= obstaculo.getBoundingClientRect().right
+                                || document.getElementById('alien').getBoundingClientRect().bottom >= obstaculo.getBoundingClientRect().y
+                                && document.getElementById('alien').getBoundingClientRect().bottom <= obstaculo.getBoundingClientRect().bottom
+                                && document.getElementById('alien').getBoundingClientRect().x >= obstaculo.getBoundingClientRect().x
+                                && document.getElementById('alien').getBoundingClientRect().x <= obstaculo.getBoundingClientRect().right
+                                    || document.getElementById('alien').getBoundingClientRect().bottom >= obstaculo.getBoundingClientRect().y
+                                    && document.getElementById('alien').getBoundingClientRect().bottom <= obstaculo.getBoundingClientRect().bottom
+                                    && document.getElementById('alien').getBoundingClientRect().right >= obstaculo.getBoundingClientRect().x
+                                    && document.getElementById('alien').getBoundingClientRect().right <= obstaculo.getBoundingClientRect().right) {
+                            alert('Chocaste');
+                        }
+                }, 100);
 
                 setTimeout(() => {
                     obstaculo.remove()
+                    clearInterval(hit);
                 }, 2000);
         },
     },
@@ -54,7 +77,7 @@ export default {
         setTimeout(() => {
             setInterval(this.randomObjects, 3000);
             //this.randomObjects();
-        }, 1500);
+        }, 2000);
     }
 }
 </script>
