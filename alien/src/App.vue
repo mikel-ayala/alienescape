@@ -54,6 +54,7 @@
     background-image:url('assets/Desert.gif');
     background-repeat:no-repeat;
     background-size: cover;
+    overflow: hidden;
   }
 
   @keyframes inicio {

@@ -43,14 +43,18 @@ export default {
                 
                 obstaculo.id = 'obstaculo';
                 document.getElementById('juego').appendChild(obstaculo);
+
+                setTimeout(() => {
+                    obstaculo.remove()
+                }, 2000);
         },
     },
     mounted() {
         window.addEventListener('keydown', this.jump);
         setTimeout(() => {
-            //setInterval(this.randomObjects, 3000);
-            this.randomObjects();
-        }, 3000);
+            setInterval(this.randomObjects, 3000);
+            //this.randomObjects();
+        }, 1500);
     }
 }
 </script>
@@ -58,16 +62,6 @@ export default {
 <style>
 img {
     width: 30%;
-}
-
-.jump {
-    animation: jump 1s;
-    animation-timing-function: cubic-bezier(.41, .54, .4, 1.02);
-}
-
-.down {
-    animation: down 1s;
-    animation-timing-function: cubic-bezier(.41, .54, .4, 1.02);
 }
 
 #alien {
@@ -84,6 +78,7 @@ img {
     position: relative;
     left: 33cm;
     background-color: black;
+    overflow-x: hidden;
 
     animation: moveObstaculo 2s linear;
 }
@@ -92,7 +87,7 @@ img {
 @keyframes moveObstaculo {
 
     100% {
-        left: 0cm;
+        left: -3cm;
         display: none;
     }
 }
