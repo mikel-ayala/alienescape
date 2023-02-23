@@ -23,6 +23,7 @@ export default {
     methods: {
         changeState(e) {
             if (e.keyCode == '38') {
+                this.estado = 'subir';
             } else if (e.keyCode == '40') {
                 this.estado = "bajar";
             }
@@ -32,6 +33,8 @@ export default {
 
                 let aleat = (Math.floor(Math.random() * 470)) - 100;
                 obstaculo.style.top = aleat + 'px';
+                obstaculo.id = 'obstaculo';
+                document.getElementById('juego').appendChild(obstaculo);
 
                 //console.log(aleat);
                 let hit = setInterval(() => {
@@ -90,24 +93,16 @@ export default {
             //     document.getElementById('alien').className = '';
             // }, 800);
         },
-        randomObjects() {
-            setTimeout(() => {
-                let randNum = Math.floor(Math.random() * 2);
-                if (randNum == 0) {
-
-                } else if (randNum == 1) {
-
-                } else {
-
-                }
-            }, 1000);
-        }
     },
     mounted() {
         window.addEventListener('keydown', (e) => { this.changeState(e)});
         window.addEventListener('keyup', () => {
             this.estado = "quieto";
         });
+
+        setTimeout(() => {
+            setInterval(this.randomObjects, 2500);
+        }, 2000);
     }
 }
 </script>
@@ -134,4 +129,21 @@ img {
   top: 6cm;
   left: 2cm;
 }
+
+#obstaculo {
+    height: 2cm;
+    width: 2cm;
+    position: relative;
+    left: 33cm;
+    background-color: black;
+    overflow-x: hidden;
+    animation: moveObstaculo 2s linear;
+}
+@keyframes moveObstaculo {
+    100% {
+        left: -3cm;
+        display: none;
+    }
+}
+
 </style>
