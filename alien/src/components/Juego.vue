@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <img src="../assets/ufo.gif" id="alien">
-    </div>
+  <div>
+    <img src="../assets/ufo.gif" id="alien" />
+  </div>
 </template>
 
 <script>
@@ -9,28 +9,23 @@ export default {
     data() {
         return {
             verticalPosition: 230,
+            estado: "quieto",
+            moviendo: true,
         }
     },
+    watch: {
+        // watching top-level property
+        estado(val, oldVal) {
+          this.moverse();
+        }
+    }
+    ,
     methods: {
-        jump(e) {
-
+        changeState(e) {
             if (e.keyCode == '38') {
-                if (this.verticalPosition > 10) {
-                    this.verticalPosition = this.verticalPosition - 10;
-                    //console.log(this.verticalPosition);
-                    document.getElementById('alien').style.top = this.verticalPosition + "px";
-                }
             } else if (e.keyCode == '40') {
-                if (this.verticalPosition < 470) {
-                    this.verticalPosition = this.verticalPosition + 10;
-                    //console.log(this.verticalPosition);
-                    document.getElementById('alien').style.top = this.verticalPosition + "px";
-                }
+                this.estado = "bajar";
             }
-
-            setTimeout(() => {
-                document.getElementById('alien').className = '';
-            }, 800);
         },
         randomObjects() {
                 let obstaculo = document.createElement('div');
@@ -39,10 +34,6 @@ export default {
                 obstaculo.style.top = aleat + 'px';
 
                 //console.log(aleat);
-
-                obstaculo.id = 'obstaculo';
-                document.getElementById('juego').appendChild(obstaculo);
-                
                 let hit = setInterval(() => {
                     console.log('Y Obs:' + obstaculo.getBoundingClientRect().y + ' Bottom Obs: ' + obstaculo.getBoundingClientRect().bottom);
                     console.log('Y Alien:' + document.getElementById('alien').getBoundingClientRect().y + ' Alien Obs: ' + document.getElementById('alien').getBoundingClientRect().bottom);
@@ -64,55 +55,83 @@ export default {
                                     && document.getElementById('alien').getBoundingClientRect().right <= obstaculo.getBoundingClientRect().right) {
                             alert('Chocaste');
                         }
-                }, 100);
+                    }, 100);
 
                 setTimeout(() => {
                     obstaculo.remove()
                     clearInterval(hit);
                 }, 2000);
+            },
+        moverse() {
+            if (this.estado == "subir") {
+                this.subir();
+            } else if (this.estado == "bajar") {
+                this.bajar();
+            }
+            if (this.estado != "quieto") {
+
+                setTimeout(() => {
+                    this.moverse();
+                }, 15);
+            }
         },
+        subir() {
+            if (this.verticalPosition > 10) {
+                this.verticalPosition = this.verticalPosition - 10;
+                document.getElementById('alien').style.top = this.verticalPosition + "px";
+            }
+        },
+        bajar(e) {
+            if (this.verticalPosition < 470) {
+                this.verticalPosition = this.verticalPosition + 10;
+                document.getElementById('alien').style.top = this.verticalPosition + "px";
+            }
+            // setTimeout(() => {
+            //     document.getElementById('alien').className = '';
+            // }, 800);
+        },
+        randomObjects() {
+            setTimeout(() => {
+                let randNum = Math.floor(Math.random() * 2);
+                if (randNum == 0) {
+
+                } else if (randNum == 1) {
+
+                } else {
+
+                }
+            }, 1000);
+        }
     },
     mounted() {
-        window.addEventListener('keydown', this.jump);
-        setTimeout(() => {
-            setInterval(this.randomObjects, 3000);
-            //this.randomObjects();
-        }, 2000);
+        window.addEventListener('keydown', (e) => { this.changeState(e)});
+        window.addEventListener('keyup', () => {
+            this.estado = "quieto";
+        });
     }
 }
 </script>
 
 <style>
 img {
-    width: 30%;
+  width: 30%;
+}
+
+.jump {
+  animation: jump 1s;
+  animation-timing-function: cubic-bezier(0.41, 0.54, 0.4, 1.02);
+}
+
+.down {
+  animation: down 1s;
+  animation-timing-function: cubic-bezier(0.41, 0.54, 0.4, 1.02);
 }
 
 #alien {
-    height: 3cm;
-    width: 3cm;
-    position: relative;
-    top: 6cm;
-    left: 2cm;
+  height: 3cm;
+  width: 3cm;
+  position: relative;
+  top: 6cm;
+  left: 2cm;
 }
-
-#obstaculo {
-    height: 2cm;
-    width: 2cm;
-    position: relative;
-    left: 33cm;
-    background-color: black;
-    overflow-x: hidden;
-
-    animation: moveObstaculo 2s linear;
-}
-
-
-@keyframes moveObstaculo {
-
-    100% {
-        left: -3cm;
-        display: none;
-    }
-}
-
 </style>
