@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <img src="../assets/ufo.gif" id="alien" />
-  </div>
+    <div>
+        <img src="../assets/ufo.gif" id="alien" />
+    </div>
 </template>
 
 <script>
@@ -42,10 +42,10 @@ export default {
                 let obstaculo = document.createElement('div');
                 let alien = document.getElementById('alien');
 
-                let aleat = (Math.floor(Math.random() * 470)) - 100;
-                obstaculo.style.top = aleat + 'px';
-                obstaculo.id = 'obstaculo';
-                document.getElementById('juego').appendChild(obstaculo);
+            let aleat = (Math.floor(Math.random() * 470)) - 100;
+            obstaculo.style.top = aleat + 'px';
+            obstaculo.id = 'obstaculo';
+            document.getElementById('juego').appendChild(obstaculo);
 
                 setTimeout(() => {
                     obstaculo.remove();
@@ -63,10 +63,11 @@ export default {
                 this.bajar();
             }
             if (this.estado != "quieto") {
-
-                setTimeout(() => {
-                    this.moverse();
-                }, 15);
+                if (this.estado == direccion) {
+                    setTimeout(() => {
+                        this.moverse(direccion);
+                    }, 15);
+                }
             }
         },
         subir() {
@@ -86,7 +87,7 @@ export default {
         },
     },
     mounted() {
-        window.addEventListener('keydown', (e) => { this.changeState(e)});
+        window.addEventListener('keydown', (e) => { this.changeState(e) });
         window.addEventListener('keyup', () => {
             this.estado = "quieto";
         });
@@ -130,11 +131,11 @@ img {
     overflow-x: hidden;
     animation: moveObstaculo 2s linear;
 }
+
 @keyframes moveObstaculo {
     100% {
         left: -3cm;
         display: none;
     }
 }
-
 </style>
