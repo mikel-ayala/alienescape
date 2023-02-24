@@ -11,23 +11,13 @@ export default {
             verticalPosition: 230,
             estado: "quieto",
             moviendo: true,
-            aliens: []
-            
         }
     },
     watch: {
         // watching top-level property
         estado(val, oldVal) {
-            this.moverse();
+            this.moverse(val);
         },
-
-        aliens(val, oldVal){
-            // si hay this.aliens
-            // val[0] 
-            // alien.left <= ovni righ
-            //     compruebo si se choca
-            //     alien right = alien.lefg + algo
-        }
     }
     ,
     methods: {
@@ -40,12 +30,20 @@ export default {
         },
         randomObjects() {
                 let obstaculo = document.createElement('div');
-                let alien = document.getElementById('alien');
 
-            let aleat = (Math.floor(Math.random() * 470)) - 100;
-            obstaculo.style.top = aleat + 'px';
-            obstaculo.id = 'obstaculo';
-            document.getElementById('juego').appendChild(obstaculo);
+                let aleat = Math.floor(Math.random() * 470);
+                obstaculo.style.top = aleat + 'px';
+                obstaculo.id = 'obstaculo';
+                document.getElementById('juego').appendChild(obstaculo);
+
+                let hit = setInterval(() => {
+                    if(obstaculo.getBoundingClientRect().left < 329 && obstaculo.getBoundingClientRect().right > 229) {
+                        let choque = (this.verticalPosition + 100) < aleat || this.verticalPosition > (aleat + 65);
+                        if(!choque) {
+                            alert('Choque');
+                        }
+                    }
+                }, 10);
 
                 setTimeout(() => {
                     obstaculo.remove();
@@ -56,7 +54,7 @@ export default {
                     this.randomObjects();
                 }, (Math.floor(Math.random() * 2000)) + 1000);
             },
-        moverse() {
+        moverse(direccion) {
             if (this.estado == "subir") {
                 this.subir();
             } else if (this.estado == "bajar") {
@@ -115,16 +113,16 @@ img {
 }
 
 #alien {
-    height: 3cm;
-    width: 3cm;
+    height: 100px;
+    width: 100px;
     position: relative;
     top: 6cm;
     left: 2cm;
 }
 
 #obstaculo {
-    height: 2cm;
-    width: 2cm;
+    height: 65px;
+    width: 65px;
     position: absolute;
     left: 33cm;
     background-color: black;
