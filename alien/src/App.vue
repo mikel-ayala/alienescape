@@ -10,6 +10,7 @@
 
 <template>
   <h1>ALIEN ESCAPE</h1>
+
   <main>
     <Juego  id="juego"/>
   </main>

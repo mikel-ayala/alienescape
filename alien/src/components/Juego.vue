@@ -1,6 +1,12 @@
 <template>
     <div>
         <img src="../assets/ufo.gif" id="alien" />
+        <audio id="GameOver">
+            <source src="../assets/game-over.mp3" type="audio/mpeg" />
+        </audio>
+        <audio id="PlaySound">
+            <source src="../assets/play.mp3" type="audio/mpeg" />
+        </audio>
     </div>
 </template>
 
@@ -29,31 +35,35 @@ export default {
             }
         },
         randomObjects() {
-                let obstaculo = document.createElement('div');
+            this.playSound();
+            let obstaculo = document.createElement('div');
 
-                let aleat = Math.floor(Math.random() * 470);
-                obstaculo.style.top = aleat + 'px';
-                obstaculo.id = 'obstaculo';
-                document.getElementById('juego').appendChild(obstaculo);
+            let aleat = Math.floor(Math.random() * 470);
+            obstaculo.style.top = aleat + 'px';
+            obstaculo.id = 'obstaculo';
+            document.getElementById('juego').appendChild(obstaculo);
 
-                let hit = setInterval(() => {
-                    if(obstaculo.getBoundingClientRect().left < 329 && obstaculo.getBoundingClientRect().right > 229) {
-                        let choque = (this.verticalPosition + 100) < aleat || this.verticalPosition > (aleat + 65);
-                        if(!choque) {
-                            alert('Choque');
-                        }
+            let hit = setInterval(() => {
+                if (obstaculo.getBoundingClientRect().left < 329 && obstaculo.getBoundingClientRect().right > 229) {
+                    let choque = (this.verticalPosition + 100) < aleat || this.verticalPosition > (aleat + 65);
+                    if (!choque) {
+                        let choqueSound = document.getElementById("GameOver");
+                        choqueSound.volume = 1;
+                        choqueSound.play();
+                        alert('Choque');
                     }
-                }, 10);
+                }
+            }, 10);
 
-                setTimeout(() => {
-                    obstaculo.remove();
-                    clearInterval(hit);
-                }, 2000);
+            setTimeout(() => {
+                obstaculo.remove();
+                clearInterval(hit);
+            }, 2000);
 
-                setTimeout(() => {
-                    this.randomObjects();
-                }, (Math.floor(Math.random() * 2000)) + 1000);
-            },
+            setTimeout(() => {
+                this.randomObjects();
+            }, (Math.floor(Math.random() * 2000)) + 1000);
+        },
         moverse(direccion) {
             if (this.estado == "subir") {
                 this.subir();
@@ -79,9 +89,11 @@ export default {
                 this.verticalPosition = this.verticalPosition + 10;
                 document.getElementById('alien').style.top = this.verticalPosition + "px";
             }
-            // setTimeout(() => {
-            //     document.getElementById('alien').className = '';
-            // }, 800);
+        },
+        playSound() {
+            let choqueSound = document.getElementById("PlaySound");
+            choqueSound.volume = 1;
+            choqueSound.play();
         },
     },
     mounted() {
@@ -89,6 +101,8 @@ export default {
         window.addEventListener('keyup', () => {
             this.estado = "quieto";
         });
+
+        
 
         setTimeout(() => {
             this.randomObjects();
