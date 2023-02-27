@@ -2,6 +2,12 @@
     <div>
         <h3 id="puntos">{{ puntos }}</h3>
         <img src="../assets/ufo.gif" id="alien" />
+        <audio id="GameOver">
+            <source src="../assets/game-over.mp3" type="audio/mpeg" />
+        </audio>
+        <audio id="PlaySound">
+            <source src="../assets/play.mp3" type="audio/mpeg" />
+        </audio>
     </div>
 </template>
 
@@ -32,52 +38,57 @@ export default {
             }
         },
         randomObjects() {
-                let obstaculo = document.createElement('div');
+            this.playSound();
+            let obstaculo = document.createElement('div');
 
-                let aleat = Math.floor(Math.random() * 470);
-                obstaculo.style.top = aleat + 'px';
-                obstaculo.id = 'obstaculo';
+            let aleat = Math.floor(Math.random() * 470);
+            obstaculo.style.top = aleat + 'px';
+            obstaculo.id = 'obstaculo';
 
-                let tipo =  Math.floor(Math.random() * 3);
-                let altoObstaculo;
-                let largoObstaculo;
+            let tipo = Math.floor(Math.random() * 3);
+            let altoObstaculo;
+            let largoObstaculo;
 
-                switch (tipo) {
-                    case 0:
-                        altoObstaculo = '120px';
-                        largoObstaculo = '120px';
-                        obstaculo.style.backgroundImage = "url('./src/assets/helicoptero.gif')";
-                        break;
-                    case 1:
-                        altoObstaculo = '80px';
-                        largoObstaculo = '200px';
-                        obstaculo.style.backgroundImage = "url('./src/assets/helicopter2.png')";
-                        break;
-                    case 2:
-                        altoObstaculo = '120px';
-                        largoObstaculo = '200px';
-                        obstaculo.style.backgroundImage = "url('./src/assets/helicopter3.gif')";
-                        break;
+            switch (tipo) {
+                case 0:
+                    altoObstaculo = '120px';
+                    largoObstaculo = '120px';
+                    obstaculo.style.backgroundImage = "url('./src/assets/helicoptero.gif')";
+                    break;
+                case 1:
+                    altoObstaculo = '80px';
+                    largoObstaculo = '200px';
+                    obstaculo.style.backgroundImage = "url('./src/assets/helicopter2.png')";
+                    break;
+                case 2:
+                    altoObstaculo = '120px';
+                    largoObstaculo = '200px';
+                    obstaculo.style.backgroundImage = "url('./src/assets/helicopter3.gif')";
+                    break;
+            }
+
+            obstaculo.style.height = altoObstaculo;
+            obstaculo.style.width = largoObstaculo;
+
+            document.getElementById('juego').appendChild(obstaculo);
+
+            let hit = setInterval(() => {
+                if (obstaculo.getBoundingClientRect().left < 329 && obstaculo.getBoundingClientRect().right > 229) {
+                    let choque = (this.verticalPosition + 100) < aleat || this.verticalPosition > (aleat + parseInt(altoObstaculo.substring(0, altoObstaculo.length - 2)));
+                    if (!choque) {
+                        let choqueSound = document.getElementById("GameOver");
+                        choqueSound.volume = 1;
+                        choqueSound.play();
+                        alert('Choque');
+                    }
                 }
 
-                obstaculo.style.height = altoObstaculo;
-                obstaculo.style.width = largoObstaculo;
+            }, 10);
 
-                document.getElementById('juego').appendChild(obstaculo);
-
-                let hit = setInterval(() => {
-                    if(obstaculo.getBoundingClientRect().left < 329 && obstaculo.getBoundingClientRect().right > 229) {
-                        let choque = (this.verticalPosition + 100) < aleat || this.verticalPosition > (aleat + parseInt(altoObstaculo.substring(0, altoObstaculo.length - 2)));
-                        if(!choque) {
-                            alert('Choque');
-                        }
-                    }
-                }, 10);
-
-                setTimeout(() => {
-                    obstaculo.remove();
-                    clearInterval(hit);
-                }, 2000);
+            setTimeout(() => {
+                obstaculo.remove();
+                clearInterval(hit);
+            }, 2000);
 
                 setTimeout(() => {
                     this.randomObjects();
@@ -134,12 +145,19 @@ export default {
                 document.getElementById('alien').style.top = this.verticalPosition + "px";
             }
         },
+        playSound() {
+            let choqueSound = document.getElementById("PlaySound");
+            choqueSound.volume = 1;
+            choqueSound.play();
+        },
     },
     mounted() {
         window.addEventListener('keydown', (e) => { this.changeState(e) });
         window.addEventListener('keyup', () => {
             this.estado = "quieto";
         });
+
+
 
         setTimeout(() => {
             //this.randomObjects();
@@ -189,15 +207,15 @@ img {
     position: absolute;
     top: 85%;
     left: 33cm;
+    opacity:0.9;
 
     animation: moveObstaculo 4s linear;
 }
 
 #divCartel h3 {
     position: absolute;
-    text-align: center;
     top:27px;
-    margin-left: 20px;
+    left: 29px;
     font-family: nasalization;
 }
 
