@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3 id="puntos">{{ puntos }}</h3>
-        <img src="../assets/ufo.gif" id="alien" />
+        <div id="alien"><img src="../assets/ufo.gif" /></div>
     </div>
 </template>
 
@@ -39,9 +39,10 @@ export default {
                 document.getElementById('juego').appendChild(obstaculo);
 
                 let hit = setInterval(() => {
-                    if(obstaculo.getBoundingClientRect().left < 329 && obstaculo.getBoundingClientRect().right > 229) {
-                        let choque = (this.verticalPosition + 100) < aleat || this.verticalPosition > (aleat + 65);
+                    if(obstaculo.getBoundingClientRect().left < 309 && obstaculo.getBoundingClientRect().right > 229) {
+                        let choque = (this.verticalPosition + 100) < aleat || this.verticalPosition > (aleat + 40);
                         if(!choque) {
+                            console.log(this.verticalPosition + '-> Vertical || Bottom obs <-' + (aleat + 65));
                             alert('Choque');
                         }
                     }
@@ -96,7 +97,7 @@ export default {
             }
         },
         subir() {
-            if (this.verticalPosition > 10) {
+            if (this.verticalPosition > 0) {
                 this.verticalPosition = this.verticalPosition - 10;
                 document.getElementById('alien').style.top = this.verticalPosition + "px";
             }
@@ -115,10 +116,10 @@ export default {
         });
 
         setTimeout(() => {
-            //this.randomObjects();
+            this.randomObjects();
         }, 2000);
 
-        setInterval(this.puntuacion, 2);
+        setInterval(this.puntuacion, 20);
     }
 }
 </script>
@@ -139,11 +140,21 @@ img {
 }
 
 #alien {
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
     position: relative;
     top: 6cm;
     left: 2cm;
+    border-radius: 100px 100px 0px 0px;
+    border: solid red 1px;
+}
+
+#alien img {
+    height: 120%;
+    width: 120%;
+    position: absolute;
+    right: -8px;
+    top: -5px;
 }
 
 #obstaculo {
