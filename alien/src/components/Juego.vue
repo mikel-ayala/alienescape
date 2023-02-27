@@ -6,6 +6,7 @@
 </template>
 
 <script>
+
 export default {
     data() {
         return {
@@ -36,11 +37,37 @@ export default {
                 let aleat = Math.floor(Math.random() * 470);
                 obstaculo.style.top = aleat + 'px';
                 obstaculo.id = 'obstaculo';
+
+                let tipo =  Math.floor(Math.random() * 3);
+                let altoObstaculo;
+                let largoObstaculo;
+
+                switch (tipo) {
+                    case 0:
+                        altoObstaculo = '120px';
+                        largoObstaculo = '120px';
+                        obstaculo.style.backgroundImage = "url('./src/assets/helicoptero.gif')";
+                        break;
+                    case 1:
+                        altoObstaculo = '80px';
+                        largoObstaculo = '200px';
+                        obstaculo.style.backgroundImage = "url('./src/assets/helicopter2.png')";
+                        break;
+                    case 2:
+                        altoObstaculo = '120px';
+                        largoObstaculo = '200px';
+                        obstaculo.style.backgroundImage = "url('./src/assets/helicopter3.gif')";
+                        break;
+                }
+
+                obstaculo.style.height = altoObstaculo;
+                obstaculo.style.width = largoObstaculo;
+
                 document.getElementById('juego').appendChild(obstaculo);
 
                 let hit = setInterval(() => {
                     if(obstaculo.getBoundingClientRect().left < 329 && obstaculo.getBoundingClientRect().right > 229) {
-                        let choque = (this.verticalPosition + 100) < aleat || this.verticalPosition > (aleat + 65);
+                        let choque = (this.verticalPosition + 100) < aleat || this.verticalPosition > (aleat + parseInt(altoObstaculo.substring(0, altoObstaculo.length - 2)));
                         if(!choque) {
                             alert('Choque');
                         }
@@ -147,14 +174,15 @@ img {
 }
 
 #obstaculo {
-    height: 65px;
-    width: 65px;
+    min-width: 65px;
+    min-height: 65px;
     position: absolute;
     left: 33cm;
-    background-color: black;
     overflow-x: hidden;
 
     animation: moveObstaculo 2s linear;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #divCartel {
