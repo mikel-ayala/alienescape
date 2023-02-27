@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h3 id="puntos">{{ puntos }}</h3>
         <img src="../assets/ufo.gif" id="alien" />
     </div>
 </template>
@@ -11,6 +12,7 @@ export default {
             verticalPosition: 230,
             estado: "quieto",
             moviendo: true,
+            puntos: 0,
         }
     },
     watch: {
@@ -53,7 +55,32 @@ export default {
                 setTimeout(() => {
                     this.randomObjects();
                 }, (Math.floor(Math.random() * 2000)) + 1000);
-            },
+        },
+        puntuacion() {
+            this.puntos++;
+
+            if(this.puntos%1000 == 0) {
+                let puntosCartel = this.puntos/1000 + ' KM';
+                let divCartel = document.createElement('div');
+                let cartel = document.createElement('img');
+                let h3Cartel = document.createElement('h3');
+
+                divCartel.id = 'divCartel';
+
+                h3Cartel.innerHTML = puntosCartel;
+                divCartel.appendChild(h3Cartel);
+
+                cartel.id = 'cartel';
+                cartel.setAttribute('src', '/src/assets/cartelKilometros.png');
+                divCartel.appendChild(cartel);
+
+                document.getElementById('juego').appendChild(divCartel);
+
+                setTimeout(() => {
+                    divCartel.remove();
+                }, 4000);
+            }
+        },
         moverse(direccion) {
             if (this.estado == "subir") {
                 this.subir();
@@ -79,9 +106,6 @@ export default {
                 this.verticalPosition = this.verticalPosition + 10;
                 document.getElementById('alien').style.top = this.verticalPosition + "px";
             }
-            // setTimeout(() => {
-            //     document.getElementById('alien').className = '';
-            // }, 800);
         },
     },
     mounted() {
@@ -91,8 +115,10 @@ export default {
         });
 
         setTimeout(() => {
-            this.randomObjects();
+            //this.randomObjects();
         }, 2000);
+
+        setInterval(this.puntuacion, 2);
     }
 }
 </script>
@@ -127,7 +153,34 @@ img {
     left: 33cm;
     background-color: black;
     overflow-x: hidden;
+
     animation: moveObstaculo 2s linear;
+}
+
+#divCartel {
+    position: absolute;
+    top: 85%;
+    left: 33cm;
+
+    animation: moveObstaculo 4s linear;
+}
+
+#divCartel h3 {
+    position: absolute;
+    text-align: center;
+    top:27px;
+    margin-left: 20px;
+    font-family: nasalization;
+}
+
+#divCartel img {
+    height: 100px;
+    width: 100px;
+}
+
+#puntos {
+    text-align: end;
+    margin-right: 20px;
 }
 
 @keyframes moveObstaculo {
