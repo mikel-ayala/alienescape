@@ -9,8 +9,8 @@
 </script>
 
 <template>
-  <h1>ALIEN ESCAPE</h1>
-
+  <h1>ALIEN ESCAPE</h1>  
+  <img id="corriendo" src="./assets/alien.gif" alt="">
   <main>
     <Juego  id="juego"/>
   </main>
@@ -36,11 +36,13 @@
     font-family: nasalization;
     font-size: 8em;
     z-index: 1;
+    color: white;
   }
   main {
     position: relative;
     width: 100vw;
     height: 100vh;
+    background-color: #121212;
   }
   #juego {
     position: absolute;
@@ -57,6 +59,15 @@
     background-size: cover;
     overflow: hidden;
   }
+  #corriendo {
+    position: absolute;
+    top: 90vh;
+    left: -5vw;
+    z-index: 3;
+    width: auto;
+    height: 10vh;  
+    animation: corriendo 5s;
+  }
 
   @keyframes inicio {
     from {
@@ -65,6 +76,15 @@
     to {
       transform: translateY(0px);
 
+    }
+  }
+
+  @keyframes corriendo {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(1700px);
     }
   }
 </style>
