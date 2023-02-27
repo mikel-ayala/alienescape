@@ -46,8 +46,7 @@ export default {
             obstaculo.id = 'obstaculo';
 
             let imgObstaculo = document.createElement('img');
-            //let tipo = Math.floor(Math.random() * 3);
-            let tipo = 0;
+            let tipo = Math.floor(Math.random() * 3);
             let altoObstaculo;
             let largoObstaculo;
 
@@ -56,7 +55,7 @@ export default {
             switch (tipo) {
                 case 0:
                     altoObstaculo = '120px';
-                    largoObstaculo = '120px';
+                    largoObstaculo = '160px';
                     imgObstaculo.style.width = '120%';
                     imgObstaculo.style.height = '120%';
                     imgObstaculo.style.left = '-20px';
@@ -69,8 +68,12 @@ export default {
                     imgObstaculo.setAttribute('src','./src/assets/helicopter2.png');
                     break;
                 case 2:
-                    altoObstaculo = '120px';
-                    largoObstaculo = '200px';
+                    altoObstaculo = '100px';
+                    largoObstaculo = '140px';
+                    imgObstaculo.style.height = '120%';
+                    imgObstaculo.style.width = '200%';
+                    imgObstaculo.style.left = '-100px';
+                    imgObstaculo.style.top = '-20px';
                     imgObstaculo.setAttribute('src','./src/assets/helicopter3.gif');
                     break;
             }
@@ -82,7 +85,7 @@ export default {
 
             let hit = setInterval(() => {
                 if (obstaculo.getBoundingClientRect().left < 310 && obstaculo.getBoundingClientRect().right > 229) {
-                    let choque = (this.verticalPosition + 80) < aleat || this.verticalPosition > (aleat + (parseInt(altoObstaculo.substring(0, altoObstaculo.length - 2)) - 40));
+                    let choque = (this.verticalPosition + 80) < aleat || this.verticalPosition > (aleat + (parseInt(altoObstaculo.substring(0, altoObstaculo.length - 2)) - 20));
                     if (!choque) {
                         let choqueSound = document.getElementById("GameOver");
                         choqueSound.volume = 1;
@@ -98,10 +101,6 @@ export default {
                 obstaculo.remove();
                 clearInterval(hit);
             }, 2000);
-
-                setTimeout(() => {
-                    this.randomObjects();
-                }, (Math.floor(Math.random() * 2000)) + 1000);
         },
         puntuacion() {
             this.puntos++;
@@ -169,7 +168,11 @@ export default {
 
 
         setTimeout(() => {
-            this.randomObjects();
+            setInterval(() => {
+                for(let i = 0; i < ((Math.floor(Math.random() * 2)) + 1); i++){
+                    this.randomObjects();
+                }
+            }, (Math.floor(Math.random() * 1000)) + 500);
         }, 2000);
 
         setInterval(this.puntuacion, 20);
@@ -199,7 +202,6 @@ img {
     top: 6cm;
     left: 2cm;
     border-radius: 100px 100px 0px 0px;
-    border: solid red 1px;
 }
 
 #alien img {
@@ -219,8 +221,6 @@ img {
     animation: moveObstaculo 2s linear;
     background-repeat: no-repeat;
     background-size: cover;
-
-    border: solid blue 1px;
 }
 
 #obstaculo img {
