@@ -161,15 +161,15 @@ img {
     position: absolute;
     top: 85%;
     left: 33cm;
+    opacity:0.9;
 
     animation: moveObstaculo 4s linear;
 }
 
 #divCartel h3 {
     position: absolute;
-    text-align: center;
     top:27px;
-    margin-left: 20px;
+    left: 29px;
     font-family: nasalization;
 }
 
