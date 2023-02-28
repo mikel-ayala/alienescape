@@ -7,7 +7,6 @@
     }
   }
 </script>
-
 <template>
   <h1>ALIEN ESCAPE</h1>  
   <img id="corriendo" src="./assets/alien.gif" alt="">

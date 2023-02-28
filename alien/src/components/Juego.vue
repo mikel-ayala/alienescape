@@ -3,16 +3,15 @@
         <h3 id="puntos">{{ puntos }}</h3>
         <img src="../assets/ufo.gif" id="alien" />
         <audio id="GameOver">
-            <source src="../assets/game-over.mp3" type="audio/mpeg" />
+            <source src="../assets/game-over2.mp3" type="audio/mpeg" />
         </audio>
         <audio id="PlaySound">
-            <source src="../assets/play.mp3" type="audio/mpeg" />
+            <source src="../assets/play2.mp3" type="audio/mpeg" />
         </audio>
     </div>
 </template>
 
 <script>
-
 export default {
     data() {
         return {
@@ -79,7 +78,14 @@ export default {
                         let choqueSound = document.getElementById("GameOver");
                         choqueSound.volume = 1;
                         choqueSound.play();
-                        alert('Choque');
+                        Swal.fire({
+                            title: 'Sweet!',
+                            text: 'Modal with a custom image.',
+                            imageUrl: '../assetes/alien.gif',
+                            imageWidth: 400,
+                            imageHeight: 200,
+                            imageAlt: 'Custom image',
+                        })
                     }
                 }
 
@@ -90,15 +96,15 @@ export default {
                 clearInterval(hit);
             }, 2000);
 
-                setTimeout(() => {
-                    this.randomObjects();
-                }, (Math.floor(Math.random() * 2000)) + 1000);
+            setTimeout(() => {
+                this.randomObjects();
+            }, (Math.floor(Math.random() * 2000)) + 1000);
         },
         puntuacion() {
             this.puntos++;
 
-            if(this.puntos%1000 == 0) {
-                let puntosCartel = this.puntos/1000 + ' KM';
+            if (this.puntos % 1000 == 0) {
+                let puntosCartel = this.puntos / 1000 + ' KM';
                 let divCartel = document.createElement('div');
                 let cartel = document.createElement('img');
                 let h3Cartel = document.createElement('h3');
@@ -156,8 +162,6 @@ export default {
         window.addEventListener('keyup', () => {
             this.estado = "quieto";
         });
-
-
 
         setTimeout(() => {
             this.randomObjects();
@@ -217,14 +221,14 @@ img {
     position: absolute;
     top: 85%;
     left: 33cm;
-    opacity:0.9;
+    opacity: 0.9;
 
     animation: moveObstaculo 4s linear;
 }
 
 #divCartel h3 {
     position: absolute;
-    top:27px;
+    top: 27px;
     left: 29px;
     font-family: nasalization;
 }
