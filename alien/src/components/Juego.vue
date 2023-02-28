@@ -20,6 +20,7 @@ export default {
             estado: "quieto",
             moviendo: true,
             puntos: 0,
+            prevObsPos: -100
         }
     },
     watch: {
@@ -42,6 +43,24 @@ export default {
             let obstaculo = document.createElement('div');
 
             let aleat = Math.floor(Math.random() * 470);
+            if((aleat + 144) >= this.prevObsPos && (this.prevObsPos + 144) >= aleat) {
+                if(aleat < this.prevObsPos) {
+                    if((aleat - 144) < 0) {
+                        aleat += 288;
+                    } else {
+                        aleat -= 144;
+                    }
+                } else {
+                    if((aleat + 144) > 470) {
+                        aleat -= 288;
+                    } else {
+                        aleat += 144;
+                    }
+                }
+            }
+            console.log(aleat);
+            this.prevObsPos = aleat;
+
             obstaculo.style.top = aleat + 'px';
             obstaculo.id = 'obstaculo';
 
@@ -90,7 +109,6 @@ export default {
                         let choqueSound = document.getElementById("GameOver");
                         choqueSound.volume = 1;
                         choqueSound.play();
-                        console.log(document.getElementById('alien').getBoundingClientRect().left);
                         alert('Choque');
                     }
                 }
@@ -166,13 +184,12 @@ export default {
         });
 
 
-
         setTimeout(() => {
             setInterval(() => {
                 for(let i = 0; i < ((Math.floor(Math.random() * 2)) + 1); i++){
                     this.randomObjects();
                 }
-            }, (Math.floor(Math.random() * 1000)) + 500);
+            }, 750);
         }, 2000);
 
         setInterval(this.puntuacion, 20);
