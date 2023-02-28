@@ -1,16 +1,18 @@
 <script>
   import Juego from './components/Juego.vue';
+  import Lose from './components/lose.vue';
 
   export default {
     components: {
-      Juego
+      Juego,
+      Lose
     }
   }
 </script>
-
 <template>
-  <h1>ALIEN ESCAPE</h1>  
+  <h1 id="titulo">ALIEN ESCAPE</h1>  
   <img id="corriendo" src="./assets/alien.gif" alt="">
+  <Lose id="lose"/>
   <main>
     <Juego  id="juego"/>
   </main>
@@ -24,8 +26,9 @@
   * {
     margin: 0;
     padding: 0;
+    overflow: hidden;
   }
-  h1 {
+  #titulo {
     position: absolute;
     width: 80vw;
     height: 20vh;
@@ -68,6 +71,22 @@
     height: 10vh;  
     animation: corriendo 5s;
   }
+  #lose{
+    position: absolute;
+    left: 30vw;
+    top: 25vh;
+    background-color: #121212;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    z-index: 4;
+    width: 40vw;
+    height: 50vh;
+    border-radius: 25px;
+    display: none;
+  }
+
+  .showpuntos{
+    animation: puntos 2s;
+  }
 
   @keyframes inicio {
     from {
@@ -88,4 +107,16 @@
       display: none;
     }
   }
+
+  @keyframes puntos{
+    from{
+      transform: translateY(800px);
+      display: block;
+    }
+    to{
+      transform: translateY(0);
+      display: block;
+    }
+  }
+
 </style>

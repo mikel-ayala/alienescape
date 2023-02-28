@@ -1,18 +1,17 @@
 <template>
     <div>
-        <h3 id="puntos">{{ puntos }}</h3>
+        <h3 id="puntos">{{ puntos }}M</h3>
         <img src="../assets/ufo.gif" id="alien" />
         <audio id="GameOver">
-            <source src="../assets/game-over.mp3" type="audio/mpeg" />
+            <source src="../assets/game-over2.mp3" type="audio/mpeg" />
         </audio>
         <audio id="PlaySound">
-            <source src="../assets/play.mp3" type="audio/mpeg" />
+            <source src="../assets/play2.mp3" type="audio/mpeg" />
         </audio>
     </div>
 </template>
 
 <script>
-
 export default {
     data() {
         return {
@@ -20,6 +19,7 @@ export default {
             estado: "quieto",
             moviendo: true,
             puntos: 0,
+            empezarPartida: ''
             prevObsPos: -100
         }
     },
@@ -28,8 +28,7 @@ export default {
         estado(val, oldVal) {
             this.moverse(val);
         },
-    }
-    ,
+    },
     methods: {
         changeState(e) {
             if (e.keyCode == '38') {
@@ -77,13 +76,13 @@ export default {
                     imgObstaculo.style.width = '120%';
                     imgObstaculo.style.height = '120%';
                     imgObstaculo.style.left = '-20px';
-                    
-                    imgObstaculo.setAttribute('src','./src/assets/helicoptero.gif');
+
+                    imgObstaculo.setAttribute('src', './src/assets/helicoptero.gif');
                     break;
                 case 1:
                     altoObstaculo = '80px';
                     largoObstaculo = '200px';
-                    imgObstaculo.setAttribute('src','./src/assets/helicopter2.png');
+                    imgObstaculo.setAttribute('src', './src/assets/helicopter2.png');
                     break;
                 case 2:
                     altoObstaculo = '100px';
@@ -92,7 +91,7 @@ export default {
                     imgObstaculo.style.width = '200%';
                     imgObstaculo.style.left = '-100px';
                     imgObstaculo.style.top = '-20px';
-                    imgObstaculo.setAttribute('src','./src/assets/helicopter3.gif');
+                    imgObstaculo.setAttribute('src', './src/assets/helicopter3.gif');
                     break;
             }
 
@@ -108,7 +107,12 @@ export default {
                         let choqueSound = document.getElementById("GameOver");
                         choqueSound.volume = 1;
                         choqueSound.play();
-                        alert('Choque');
+                        sessionStorage.puntos = this.puntos;
+                        var ventana = document.getElementById('lose');
+                        ventana.classList.add("showpuntos");
+                        ventana.style.display = "block";
+                        console.log(document.getElementById('alien').getBoundingClientRect().left);
+                        clearInterval(this.empezarPartida);
                     }
                 }
 
@@ -122,8 +126,8 @@ export default {
         puntuacion() {
             this.puntos++;
 
-            if(this.puntos%1000 == 0) {
-                let puntosCartel = this.puntos/1000 + ' KM';
+            if (this.puntos % 1000 == 0) {
+                let puntosCartel = this.puntos / 1000 + ' KM';
                 let divCartel = document.createElement('div');
                 let cartel = document.createElement('img');
                 let h3Cartel = document.createElement('h3');
@@ -182,10 +186,9 @@ export default {
             this.estado = "quieto";
         });
 
-
         setTimeout(() => {
-            setInterval(() => {
-                for(let i = 0; i < ((Math.floor(Math.random() * 2)) + 1); i++){
+            this.empezarPartida = setInterval(() => {
+                for (let i = 0; i < ((Math.floor(Math.random() * 2)) + 1); i++) {
                     this.randomObjects();
                 }
             }, 750);
@@ -249,7 +252,7 @@ img {
     position: absolute;
     top: 80%;
     left: 33cm;
-    opacity:0.9;
+    opacity: 0.9;
 
     animation: moveObstaculo 4s linear;
 }
