@@ -113,7 +113,7 @@ export default {
                     }
                 }
 
-            }, 10);
+            }, 5);
 
             setTimeout(() => {
                 obstaculo.remove();
@@ -275,7 +275,7 @@ img {
 
 @keyframes moveObstaculo {
     100% {
-        left: -3cm;
+        left: -5cm;
         display: none;
     }
 }
