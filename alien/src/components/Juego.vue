@@ -20,6 +20,7 @@ export default {
             moviendo: true,
             puntos: 0,
             empezarPartida: ''
+            prevObsPos: -100
         }
     },
     watch: {
@@ -41,6 +42,24 @@ export default {
             let obstaculo = document.createElement('div');
 
             let aleat = Math.floor(Math.random() * 470);
+            if((aleat + 144) >= this.prevObsPos && (this.prevObsPos + 144) >= aleat) {
+                if(aleat < this.prevObsPos) {
+                    if((aleat - 144) < 0) {
+                        aleat += 288;
+                    } else {
+                        aleat -= 144;
+                    }
+                } else {
+                    if((aleat + 144) > 470) {
+                        aleat -= 288;
+                    } else {
+                        aleat += 144;
+                    }
+                }
+            }
+            console.log(aleat);
+            this.prevObsPos = aleat;
+
             obstaculo.style.top = aleat + 'px';
             obstaculo.id = 'obstaculo';
 
@@ -98,7 +117,7 @@ export default {
                     }
                 }
 
-            }, 10);
+            }, 5);
 
             setTimeout(() => {
                 obstaculo.remove();
@@ -120,7 +139,7 @@ export default {
                 divCartel.appendChild(h3Cartel);
 
                 cartel.id = 'cartel';
-                cartel.setAttribute('src', '/src/assets/cartelKilometros.png');
+                cartel.setAttribute('src', '/src/assets/cartel.png');
                 divCartel.appendChild(cartel);
 
                 document.getElementById('juego').appendChild(divCartel);
@@ -173,7 +192,7 @@ export default {
                 for (let i = 0; i < ((Math.floor(Math.random() * 2)) + 1); i++) {
                     this.randomObjects();
                 }
-            }, (Math.floor(Math.random() * 1000)) + 500);
+            }, 750);
         }, 2000);
 
         setInterval(this.puntuacion, 20);
@@ -232,7 +251,7 @@ img {
 
 #divCartel {
     position: absolute;
-    top: 85%;
+    top: 80%;
     left: 33cm;
     opacity: 0.9;
 
@@ -241,14 +260,15 @@ img {
 
 #divCartel h3 {
     position: absolute;
-    top: 27px;
-    left: 29px;
+    top:24px;
+    right: 20px;
+    font-size: 15px;
     font-family: nasalization;
 }
 
 #divCartel img {
-    height: 100px;
-    width: 100px;
+    height: 120px;
+    width: 120px;
 }
 
 #puntos {
@@ -258,7 +278,7 @@ img {
 
 @keyframes moveObstaculo {
     100% {
-        left: -3cm;
+        left: -5cm;
         display: none;
     }
 }
