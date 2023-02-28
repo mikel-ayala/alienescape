@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3 id="puntos">{{ puntos }}</h3>
+        <h3 id="puntos">{{ puntos }}M</h3>
         <img src="../assets/ufo.gif" id="alien" />
         <audio id="GameOver">
             <source src="../assets/game-over2.mp3" type="audio/mpeg" />
@@ -78,14 +78,8 @@ export default {
                         let choqueSound = document.getElementById("GameOver");
                         choqueSound.volume = 1;
                         choqueSound.play();
-                        Swal.fire({
-                            title: 'Sweet!',
-                            text: 'Modal with a custom image.',
-                            imageUrl: '../assetes/alien.gif',
-                            imageWidth: 400,
-                            imageHeight: 200,
-                            imageAlt: 'Custom image',
-                        })
+                        alert("has  perdido");
+                        window.location.reload();
                     }
                 }
 
