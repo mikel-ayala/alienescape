@@ -117,7 +117,7 @@ export default {
                 divCartel.appendChild(h3Cartel);
 
                 cartel.id = 'cartel';
-                cartel.setAttribute('src', '/src/assets/cartelKilometros.png');
+                cartel.setAttribute('src', '/src/assets/cartel.png');
                 divCartel.appendChild(cartel);
 
                 document.getElementById('juego').appendChild(divCartel);
@@ -231,7 +231,7 @@ img {
 
 #divCartel {
     position: absolute;
-    top: 85%;
+    top: 80%;
     left: 33cm;
     opacity:0.9;
 
@@ -240,14 +240,15 @@ img {
 
 #divCartel h3 {
     position: absolute;
-    top:27px;
-    left: 29px;
+    top:24px;
+    right: 20px;
+    font-size: 15px;
     font-family: nasalization;
 }
 
 #divCartel img {
-    height: 100px;
-    width: 100px;
+    height: 120px;
+    width: 120px;
 }
 
 #puntos {
