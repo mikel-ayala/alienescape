@@ -58,7 +58,6 @@ export default {
                     }
                 }
             }
-            console.log(aleat);
             this.prevObsPos = aleat;
 
             obstaculo.style.top = aleat + 'px';
