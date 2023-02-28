@@ -19,7 +19,7 @@ export default {
             estado: "quieto",
             moviendo: true,
             puntos: 0,
-            empezarPartida: ''
+            empezarPartida: '',
             prevObsPos: -100
         }
     },
