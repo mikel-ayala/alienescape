@@ -76,6 +76,7 @@ button{
     background-color: rgb(38, 206, 38);
     color: white;
     font-family: nasalization;
+    cursor: pointer;
 }
 
 #abajo{
