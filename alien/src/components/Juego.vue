@@ -22,7 +22,8 @@ export default {
             puntos: 0,
             empezarPartida: '',
             obstaculos: [],
-            prevObsPos: -100
+            prevObsPos: -100,
+            stop: false
         }
     },
     watch: {
@@ -33,10 +34,12 @@ export default {
     },
     methods: {
         changeState(e) {
-            if (e.keyCode == '38') {
-                this.estado = 'subir';
-            } else if (e.keyCode == '40') {
-                this.estado = "bajar";
+            if(!this.stop) {
+                if (e.keyCode == '38') {
+                    this.estado = 'subir';
+                } else if (e.keyCode == '40') {
+                    this.estado = "bajar";
+                }
             }
         },
         randomObjects() {
@@ -108,6 +111,7 @@ export default {
                 if (obstaculo.getBoundingClientRect().left < 310 && obstaculo.getBoundingClientRect().right > 229) {
                     let choque = (this.verticalPosition + 80) < aleat || this.verticalPosition > (aleat + (parseInt(altoObstaculo.substring(0, altoObstaculo.length - 2)) - 20));
                     if (!choque) {
+                        this.stop = true;
                         let choqueSound = document.getElementById("GameOver");
                         choqueSound.volume = 1;
                         choqueSound.play();
