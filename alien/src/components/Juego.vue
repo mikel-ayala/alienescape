@@ -18,8 +18,10 @@ export default {
             verticalPosition: 230,
             estado: "quieto",
             moviendo: true,
+            intervalPuntos: '',
             puntos: 0,
-            empezarPartida: ''
+            empezarPartida: '',
+            obstaculos: [],
             prevObsPos: -100
         }
     },
@@ -39,6 +41,7 @@ export default {
         },
         randomObjects() {
             this.playSound();
+            let timeoutFinal;
             let obstaculo = document.createElement('div');
 
             let aleat = Math.floor(Math.random() * 470);
@@ -60,13 +63,14 @@ export default {
             this.prevObsPos = aleat;
 
             obstaculo.style.top = aleat + 'px';
-            obstaculo.id = 'obstaculo';
+            obstaculo.classList.add('obstaculo');
 
             let imgObstaculo = document.createElement('img');
             let tipo = Math.floor(Math.random() * 3);
             let altoObstaculo;
             let largoObstaculo;
 
+            this.obstaculos.push(obstaculo);
             obstaculo.appendChild(imgObstaculo);
 
             switch (tipo) {
@@ -111,15 +115,26 @@ export default {
                         var ventana = document.getElementById('lose');
                         ventana.classList.add("showpuntos");
                         ventana.style.display = "block";
-                        console.log(document.getElementById('alien').getBoundingClientRect().left);
+
                         clearInterval(this.empezarPartida);
+                        clearInterval(this.intervalPuntos);
+                        clearTimeout(timeoutFinal);
+
+                        for (let i = 0; i < this.obstaculos.length; i++) {
+                            this.obstaculos[i].style.animationPlayState = 'paused';
+                        }
+
+                        // this.obstaculos[0].style.animationPlayState = 'paused';
+                        // obstaculo.style.animationPlayState = 'paused';
+                        console.log(this.obstaculos);
                     }
                 }
 
             }, 5);
 
-            setTimeout(() => {
+            timeoutFinal = setTimeout(() => {
                 obstaculo.remove();
+                this.obstaculos.splice(this.obstaculos.indexOf(obstaculo), 1);
                 clearInterval(hit);
             }, 2000);
         },
@@ -194,7 +209,7 @@ export default {
             }, 750);
         }, 2000);
 
-        setInterval(this.puntuacion, 20);
+        this.intervalPuntos = setInterval(this.puntuacion, 20);
     }
 }
 </script>
@@ -231,18 +246,17 @@ img {
     top: -5px;
 }
 
-#obstaculo {
+.obstaculo {
     min-width: 55px;
     min-height: 55px;
     position: absolute;
     left: 33cm;
+    overflow: visible;
 
     animation: moveObstaculo 2s linear;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
-#obstaculo img {
+.obstaculo img {
     width: 100%;
     height: 100%;
     position: absolute;
