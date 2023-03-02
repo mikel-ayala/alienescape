@@ -6,7 +6,7 @@
             <source src="../assets/game-over2.mp3" type="audio/mpeg" />
         </audio>
         <audio id="PlaySound">
-            <source src="../assets/play2.mp3" type="audio/mpeg" />
+            <source src="../assets/play3.mp3" type="audio/mpeg" />
         </audio>
     </div>
 </template>
