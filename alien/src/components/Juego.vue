@@ -127,10 +127,6 @@ export default {
                         for (let i = 0; i < this.obstaculos.length; i++) {
                             this.obstaculos[i].style.animationPlayState = 'paused';
                         }
-
-                        // this.obstaculos[0].style.animationPlayState = 'paused';
-                        // obstaculo.style.animationPlayState = 'paused';
-                        console.log(this.obstaculos);
                     }
                 }
 
