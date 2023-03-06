@@ -84,12 +84,12 @@ export default {
                     imgObstaculo.style.height = '120%';
                     imgObstaculo.style.left = '-20px';
 
-                    imgObstaculo.setAttribute('src', './src/assets/helicoptero.gif');
+                    imgObstaculo.setAttribute('src', './assets/helicoptero.gif');
                     break;
                 case 1:
                     altoObstaculo = '80px';
                     largoObstaculo = '200px';
-                    imgObstaculo.setAttribute('src', './src/assets/helicopter2.png');
+                    imgObstaculo.setAttribute('src', './assets/helicopter2.png');
                     break;
                 case 2:
                     altoObstaculo = '100px';
@@ -98,7 +98,7 @@ export default {
                     imgObstaculo.style.width = '200%';
                     imgObstaculo.style.left = '-100px';
                     imgObstaculo.style.top = '-20px';
-                    imgObstaculo.setAttribute('src', './src/assets/helicopter3.gif');
+                    imgObstaculo.setAttribute('src', './assets/helicopter3.gif');
                     break;
             }
 
@@ -111,21 +111,24 @@ export default {
                 if (obstaculo.getBoundingClientRect().left < 310 && obstaculo.getBoundingClientRect().right > 229) {
                     let choque = (this.verticalPosition + 80) < aleat || this.verticalPosition > (aleat + (parseInt(altoObstaculo.substring(0, altoObstaculo.length - 2)) - 20));
                     if (!choque) {
-                        this.stop = true;
-                        let choqueSound = document.getElementById("GameOver");
-                        choqueSound.volume = 1;
-                        choqueSound.play();
-                        sessionStorage.puntos = this.puntos;
-                        var ventana = document.getElementById('lose');
-                        ventana.classList.add("showpuntos");
-                        ventana.style.display = "block";
+                        if(!this.stop){
+                            this.stop = true;
+                            let choqueSound = document.getElementById("GameOver");
+                            choqueSound.volume = 1;
+                            choqueSound.play();
+                            choqueSound
+                            sessionStorage.puntos = this.puntos;
+                            var ventana = document.getElementById('lose');
+                            ventana.classList.add("showpuntos");
+                            ventana.style.display = "block";
 
-                        clearInterval(this.empezarPartida);
-                        clearInterval(this.intervalPuntos);
-                        clearTimeout(timeoutFinal);
+                            clearInterval(this.empezarPartida);
+                            clearInterval(this.intervalPuntos);
+                            clearTimeout(timeoutFinal);
 
-                        for (let i = 0; i < this.obstaculos.length; i++) {
-                            this.obstaculos[i].style.animationPlayState = 'paused';
+                            for (let i = 0; i < this.obstaculos.length; i++) {
+                                this.obstaculos[i].style.animationPlayState = 'paused';
+                            }
                         }
                     }
                 }
@@ -153,7 +156,7 @@ export default {
                 divCartel.appendChild(h3Cartel);
 
                 cartel.id = 'cartel';
-                cartel.setAttribute('src', '/src/assets/cartel.png');
+                cartel.setAttribute('src', './assets/cartel.png');
                 divCartel.appendChild(cartel);
 
                 document.getElementById('juego').appendChild(divCartel);
